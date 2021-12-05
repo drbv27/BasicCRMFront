@@ -11,6 +11,7 @@ import Navegacion from "./components/layout/Navegacion";
 import Clientes from "./components/clientes/Clientes";
 import Pedidos from "./components/pedidos/Pedidos";
 import Productos from "./components/productos/Productos";
+import NuevoCliente from "./components/clientes/NuevoCliente";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <main className="caja-contenido col-9">
             <Routes>
               <Route path="/" element={<Clientes />} />
+              <Route path="/clientes/nuevo" element={<NuevoCliente />} />
 
               <Route path="/productos" element={<Productos />} />
 
