@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 
 const Navegacion = () => {
   return (
-    <aside class="sidebar col-3">
+    <aside className="sidebar col-3">
       <h2>Administración</h2>
 
-      <nav class="navegacion">
-        <Link to={"/"} class="clientes">
+      <nav className="navegacion">
+        <Link to={"/"} className="clientes">
           Clientes
         </Link>
-        <Link to={"/productos"} class="productos">
+        <Link to={"/productos"} className="productos">
           Productos
         </Link>
-        <Link to={"/pedidos"} class="pedidos">
+        <Link to={"/pedidos"} className="pedidos">
           Pedidos
         </Link>
       </nav>
