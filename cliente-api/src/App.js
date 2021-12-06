@@ -12,6 +12,7 @@ import Clientes from "./components/clientes/Clientes";
 import Pedidos from "./components/pedidos/Pedidos";
 import Productos from "./components/productos/Productos";
 import NuevoCliente from "./components/clientes/NuevoCliente";
+import EditarCliente from "./components/clientes/EditarCliente";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Clientes />} />
               <Route path="/clientes/nuevo" element={<NuevoCliente />} />
+              <Route path="/clientes/editar/:id" element={<EditarCliente />} />
 
               <Route path="/productos" element={<Productos />} />
 
