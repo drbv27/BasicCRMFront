@@ -4,7 +4,7 @@ function Cliente({ cliente }) {
   //extraer valores
   const { _id, nombre, apellido, empresa, email, telefono } = cliente;
   return (
-    <li class="cliente">
+    <li className="cliente">
       <div className="info-cliente">
         <p className="nombre">
           {nombre} {apellido}

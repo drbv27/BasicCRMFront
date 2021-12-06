@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import clienteAxios from "../../config/axios";
 
 function NuevoCliente() {
+  let navigate = useNavigate();
   //cliente=state, guardarCliente= funcion para guardar el state
   const [cliente, guardarCliente] = useState({
     nombre: "",
@@ -38,10 +42,35 @@ function NuevoCliente() {
     return valido;
   };
 
+  //Añade en la REST API un cliente nuevo
+  const agregarCliente = (e) => {
+    e.preventDefault();
+
+    //enviar peticion
+    clienteAxios.post("/clientes", cliente).then((res) => {
+      console.log(res);
+      //validar si hay errores de mongodb
+      if (res.data.code === 11000) {
+        Swal.fire({
+          type: "error",
+          title: "Hubo un error",
+          text: "Ese correo ya esta registrado",
+        });
+        console.log("Error duplicado en Mongo");
+      } else {
+        console.log(res.data);
+        Swal.fire("Se agregó el cliente", res.data.mensaje, "success");
+      }
+
+      //Redireccionar
+      navigate("/", { replace: true });
+    });
+  };
+
   return (
     <>
       <h2>Nuevo Cliente</h2>
-      <form>
+      <form onSubmit={agregarCliente}>
         <legend>Llena todos los campos</legend>
 
         <div className="campo">
@@ -87,7 +116,7 @@ function NuevoCliente() {
         <div className="campo">
           <label>Teléfono:</label>
           <input
-            type="email"
+            type="tel"
             placeholder="Teléfono Cliente"
             name="telefono"
             onChange={actualizarState}
@@ -107,4 +136,5 @@ function NuevoCliente() {
   );
 }
 
+//withRouter es un High Order Component(HOC) osea una funcion que toma un componente y retorna un nuevo componente
 export default NuevoCliente;
