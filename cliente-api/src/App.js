@@ -10,9 +10,11 @@ import Navegacion from "./components/layout/Navegacion";
 /**Componentes */
 import Clientes from "./components/clientes/Clientes";
 import Pedidos from "./components/pedidos/Pedidos";
-import Productos from "./components/productos/Productos";
 import NuevoCliente from "./components/clientes/NuevoCliente";
 import EditarCliente from "./components/clientes/EditarCliente";
+import Productos from "./components/productos/Productos";
+import NuevoProducto from "./components/productos/NuevoProducto";
+import EditarProducto from "./components/productos/EditarProducto";
 
 function App() {
   return (
@@ -28,6 +30,11 @@ function App() {
               <Route path="/clientes/editar/:id" element={<EditarCliente />} />
 
               <Route path="/productos" element={<Productos />} />
+              <Route path="/productos/nuevo" element={<NuevoProducto />} />
+              <Route
+                path="/productos/editar/:id"
+                element={<EditarProducto />}
+              />
 
               <Route path="/pedidos" element={<Pedidos />} />
             </Routes>
