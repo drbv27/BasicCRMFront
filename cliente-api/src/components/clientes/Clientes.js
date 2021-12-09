@@ -13,15 +13,15 @@ function Clientes() {
 
   const [clientes, guardarClientes] = useState([]);
 
-  //qUERIE A LA api
-  const consultarAPI = async () => {
-    const clientesConsulta = await clienteAxios.get("/clientes");
-    //colocar el resultado en el state
-    guardarClientes(clientesConsulta.data);
-  };
   useEffect(() => {
+    //qUERIE A LA api
+    const consultarAPI = async () => {
+      const clientesConsulta = await clienteAxios.get("/clientes");
+      //colocar el resultado en el state
+      guardarClientes(clientesConsulta.data);
+    };
     consultarAPI();
-  }, []);
+  }, [clientes]);
   return (
     <Fragment>
       <h2>Clientes</h2>
