@@ -6,6 +6,7 @@ import clienteAxios from "../../config/axios";
 import Cliente from "./Cliente";
 
 import { Link } from "react-router-dom";
+import Spinner from "../layout/Spinner";
 
 function Clientes() {
   //Trabajar con el state
@@ -22,6 +23,8 @@ function Clientes() {
     };
     consultarAPI();
   }, [clientes]);
+
+  if (!clientes.length) return <Spinner />;
   return (
     <Fragment>
       <h2>Clientes</h2>
