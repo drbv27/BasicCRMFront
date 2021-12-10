@@ -19,7 +19,7 @@ function Productos() {
     };
     //llamar la api
     consultarAPI();
-  }, []);
+  }, [productos]);
 
   return (
     <>

@@ -1,10 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import clienteAxios from "../../config/axios";
+import Swal from "sweetalert2";
 
 function Producto({ producto }) {
   //elimina un producto
   const eliminarProducto = (id) => {
-    console.log("eliminando", id);
+    Swal.fire({
+      title: "Esta seguro?",
+      text: "Una vez eliminado no se podrá recuperar!!!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!!!!",
+      cancelButtonText: "No, Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //eliminar en la rest api
+        clienteAxios.delete(`/productos/${id}`).then((res) => {
+          if (res.status === 200) {
+            Swal.fire("Eliminado!", res.data.mensaje, "success");
+          }
+        });
+      }
+    });
   };
 
   /* console.log(producto); */
