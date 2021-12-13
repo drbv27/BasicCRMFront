@@ -1,6 +1,10 @@
 import React, { useState, Fragment } from "react";
+import Swal from "sweetalert2";
+import clienteAxios from "../../config/axios";
+import { useNavigate } from "react-router-dom";
 
-function NuevoProducto() {
+function NuevoProducto(props) {
+  let navigate = useNavigate();
   //producto = state, guardarProducto = setState
   const [producto, guardarProducto] = useState({
     nombre: "",
@@ -8,6 +12,41 @@ function NuevoProducto() {
   });
   //archivo = state, guaradarArchivo=setState
   const [archivo, guardarArchivo] = useState("");
+
+  //almacena nuevo producto en la DB
+  const agregarProducto = async (e) => {
+    e.preventDefault();
+
+    //crear un formdata
+    const formData = new FormData();
+    formData.append("nombre", producto.nombre);
+    formData.append("precio", producto.precio);
+    formData.append("imagen", archivo);
+
+    //almacenarlo en la db
+    try {
+      const res = await clienteAxios.post("/productos", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      //Lanzar una alerta
+      if (res.status === 200) {
+        Swal.fire("Agregado correctamente!", res.data.mensaje, "success");
+      }
+      //redireccionar
+      navigate("/productos", { replace: true });
+    } catch (error) {
+      console.log(error);
+      //lanzar alerta
+      Swal.fire({
+        type: "error",
+        title: "Hubo un error",
+        text: "Vuelva a intentarlo",
+      });
+    }
+  };
+
   //leer los datos del formulario
   const leerInformacionProducto = (e) => {
     guardarProducto({
@@ -26,7 +65,7 @@ function NuevoProducto() {
     <>
       <h2>Nuevo Producto</h2>
 
-      <form>
+      <form onSubmit={agregarProducto}>
         <legend>Llena todos los campos</legend>
 
         <div className="campo">
