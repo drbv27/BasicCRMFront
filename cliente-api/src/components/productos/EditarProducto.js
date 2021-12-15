@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../layout/Spinner";
 
 function EditarProductos() {
+  let navigate = useNavigate();
   //obtener el id del producto
   const { id } = useParams();
 
@@ -31,6 +32,40 @@ function EditarProductos() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //Edita un producto en la base de datos
+  const editarProducto = async (e) => {
+    e.preventDefault();
+
+    //crear un formdata
+    const formData = new FormData();
+    formData.append("nombre", producto.nombre);
+    formData.append("precio", producto.precio);
+    formData.append("imagen", archivo);
+
+    //almacenarlo en la db
+    try {
+      const res = await clienteAxios.put(`/productos/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      //Lanzar una alerta
+      if (res.status === 200) {
+        Swal.fire("Cambios Guardados!", res.data.mensaje, "success");
+      }
+      //redireccionar
+      navigate("/productos", { replace: true });
+    } catch (error) {
+      console.log(error);
+      //lanzar alerta
+      Swal.fire({
+        type: "error",
+        title: "Hubo un error",
+        text: "Vuelva a intentarlo",
+      });
+    }
+  };
+
   //leer los datos del formulario
   const leerInformacionProducto = (e) => {
     guardarProducto({
@@ -54,7 +89,7 @@ function EditarProductos() {
     <>
       <h2>Editar Producto</h2>
 
-      <form>
+      <form onSubmit={editarProducto}>
         <legend>Llena todos los campos</legend>
 
         <div className="campo">
@@ -97,7 +132,7 @@ function EditarProductos() {
           <input
             type="submit"
             className="btn btn-azul"
-            value="Agregar Producto"
+            value="Guardar Cambios"
           />
         </div>
       </form>
