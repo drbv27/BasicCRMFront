@@ -9,12 +9,13 @@ import Navegacion from "./components/layout/Navegacion";
 
 /**Componentes */
 import Clientes from "./components/clientes/Clientes";
-import Pedidos from "./components/pedidos/Pedidos";
 import NuevoCliente from "./components/clientes/NuevoCliente";
 import EditarCliente from "./components/clientes/EditarCliente";
 import Productos from "./components/productos/Productos";
 import NuevoProducto from "./components/productos/NuevoProducto";
 import EditarProducto from "./components/productos/EditarProducto";
+import Pedidos from "./components/pedidos/Pedidos";
+import NuevoPedido from "./components/pedidos/NuevoPedido";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               />
 
               <Route path="/pedidos" element={<Pedidos />} />
+              <Route path="/pedidos/nuevo/:id" element={<NuevoPedido />} />
             </Routes>
           </main>
         </div>
