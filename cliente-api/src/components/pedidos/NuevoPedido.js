@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import clienteAxios from "../../config/axios";
 import FormBuscarProducto from "./FormBuscarProducto";
+import Swal from "sweetalert2";
 
 function NuevoPedido() {
   //extraer ID del cliente
@@ -9,6 +10,8 @@ function NuevoPedido() {
 
   //state
   const [cliente, guardarCliente] = useState({});
+
+  const [busqueda, guardarBusqueda] = useState("");
 
   useEffect(() => {
     //obtener el cliente
@@ -20,11 +23,35 @@ function NuevoPedido() {
     };
     //llamar la api
     consultarAPI();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const buscarProducto = () => {};
+  const buscarProducto = async (e) => {
+    e.preventDefault();
+    //Obtener los productos de la busqueda
+    const resultadoBusqueda = await clienteAxios.post(
+      `/productos/busqueda/${busqueda}`
+    );
 
-  const leerDatosBusqueda = () => {};
+    //si no hay resultados una alerta,contrario...agregar al state
+    if (resultadoBusqueda.data[0]) {
+    } else {
+      //no hay resultados
+      Swal.fire({
+        type: "error",
+        title: "Sin resultados",
+        text: "No hay resultados",
+        icon: "error",
+      });
+    }
+
+    console.log(resultadoBusqueda);
+  };
+
+  //almacenar una busqueda en el state
+  const leerDatosBusqueda = (e) => {
+    guardarBusqueda(e.target.value);
+  };
 
   return (
     <>
@@ -99,7 +126,7 @@ function NuevoPedido() {
           type="number"
           name="precio"
           placeholder="Precio"
-          readonly="readonly"
+          readOnly="readonly"
         />
       </div>
       <div className="enviar">
