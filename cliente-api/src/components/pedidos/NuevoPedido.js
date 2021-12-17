@@ -16,6 +16,8 @@ function NuevoPedido() {
 
   const [productos, guardarProductos] = useState([]);
 
+  const [total, guardarTotal] = useState(0);
+
   useEffect(() => {
     //obtener el cliente
 
@@ -26,8 +28,11 @@ function NuevoPedido() {
     };
     //llamar la api
     consultarAPI();
+
+    //actualizar el total a pagar
+    actualizarTotal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [productos]);
 
   const buscarProducto = async (e) => {
     e.preventDefault();
@@ -86,6 +91,25 @@ function NuevoPedido() {
     guardarProductos(todosProductos);
   };
 
+  //actualizar el total a pagar
+  const actualizarTotal = () => {
+    //sie le arreglo de productos es 0, el total es cero tmb
+    if (productos.length === 0) {
+      guardarTotal(0);
+      return;
+    }
+    //calcular el nuevo total
+    let nuevoTotal = 0;
+
+    //recorrer todos los productos y sus cantidades y precios
+    productos.map(
+      (producto) => (nuevoTotal += producto.cantidad * producto.precio)
+    );
+
+    //almacenar el total ene le state
+    guardarTotal(nuevoTotal);
+  };
+
   return (
     <>
       <h2>Nuevo Pedido</h2>
@@ -111,18 +135,18 @@ function NuevoPedido() {
           />
         ))}
       </ul>
-      <div className="campo">
-        <label>Total:</label>
-        <input
-          type="number"
-          name="precio"
-          placeholder="Precio"
-          readOnly="readonly"
-        />
-      </div>
-      <div className="enviar">
-        <input type="submit" className="btn btn-azul" value="Agregar Pedido" />
-      </div>
+      <p className="total">
+        Total a Pagar: <span> $ {total}</span>
+      </p>
+      {total > 0 ? (
+        <form>
+          <input
+            type="submit"
+            value="Realizar Pedido"
+            className="btn btn-verde btn-block"
+          />
+        </form>
+      ) : null}
     </>
   );
 }
