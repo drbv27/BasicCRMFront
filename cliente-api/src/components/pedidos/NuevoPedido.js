@@ -4,8 +4,10 @@ import clienteAxios from "../../config/axios";
 import FormBuscarProducto from "./FormBuscarProducto";
 import Swal from "sweetalert2";
 import FormCantidadProducto from "./FormCantidadProducto";
+import { useNavigate } from "react-router-dom";
 
 function NuevoPedido() {
+  let navigate = useNavigate();
   //extraer ID del cliente
   const { id } = useParams();
 
@@ -119,6 +121,44 @@ function NuevoPedido() {
     guardarTotal(nuevoTotal);
   };
 
+  //almacena el pedido en la BD
+  const realizarPedido = (e) => {
+    e.preventDefault();
+
+    //contruir el objeto a enviar
+    const pedido = {
+      cliente: id,
+      pedido: productos,
+      total: total,
+    };
+    //almacenarlo en la BD
+    const resultado = clienteAxios
+      .post(`/pedidos/nuevo/${id}`, pedido)
+      .then((res) => {
+        console.log(res);
+        //leer resultado
+        if (res.status === 200) {
+          //alerta de todo bien
+          Swal.fire({
+            type: "success",
+            title: "Correcto",
+            text: res.data.mensaje,
+            icon: "success",
+          });
+        } else {
+          //alerta de error
+          Swal.fire({
+            type: "error",
+            title: "Hubo un error",
+            text: "Vuelva a intentarlo",
+            icon: "error",
+          });
+        }
+        //redireccionar
+        navigate("/pedidos", { replace: true });
+      });
+  };
+
   return (
     <>
       <h2>Nuevo Pedido</h2>
@@ -149,7 +189,7 @@ function NuevoPedido() {
         Total a Pagar: <span> $ {total}</span>
       </p>
       {total > 0 ? (
-        <form>
+        <form onSubmit={realizarPedido}>
           <input
             type="submit"
             value="Realizar Pedido"
