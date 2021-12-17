@@ -46,7 +46,7 @@ function NuevoPedido() {
       //ponerlo en el state
       guardarProductos([...productos, productoResultado]);
 
-      console.log(productoResultado);
+      /* console.log(productoResultado); */
     } else {
       //no hay resultados
       Swal.fire({
@@ -57,12 +57,22 @@ function NuevoPedido() {
       });
     }
 
-    console.log(resultadoBusqueda);
+    /* console.log(resultadoBusqueda); */
   };
 
   //almacenar una busqueda en el state
   const leerDatosBusqueda = (e) => {
     guardarBusqueda(e.target.value);
+  };
+
+  //actualizar la cantidad de productos
+  const restarProductos = (i) => {
+    console.log("uno menos...", i);
+    /* console.log(productos, i); */
+  };
+  const aumentarProductos = (i) => {
+    console.log("uno mas...", i);
+    /* console.log(productos, i); */
   };
 
   return (
@@ -81,7 +91,13 @@ function NuevoPedido() {
       />
       <ul className="resumen">
         {productos.map((producto, index) => (
-          <FormCantidadProducto key={producto.producto} producto={producto} />
+          <FormCantidadProducto
+            key={producto.producto}
+            producto={producto}
+            restarProductos={restarProductos}
+            aumentarProductos={aumentarProductos}
+            index={index}
+          />
         ))}
       </ul>
       <div className="campo">
