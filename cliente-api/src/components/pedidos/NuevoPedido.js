@@ -67,12 +67,23 @@ function NuevoPedido() {
 
   //actualizar la cantidad de productos
   const restarProductos = (i) => {
-    console.log("uno menos...", i);
-    /* console.log(productos, i); */
+    //Copiar el arreglo original de productos
+    const todosProductos = [...productos];
+    //si está en cero, no puede ir mas allá
+    if (todosProductos[i].cantidad === 0) return;
+    //sino hacemos el decremento
+    todosProductos[i].cantidad--;
+    //almacenarlo en el state
+    guardarProductos(todosProductos);
   };
   const aumentarProductos = (i) => {
-    console.log("uno mas...", i);
-    /* console.log(productos, i); */
+    //copiar el arreglo para no mutra el original
+    const todosProductos = [...productos];
+
+    //incremento
+    todosProductos[i].cantidad++;
+    //colocarlo en el state
+    guardarProductos(todosProductos);
   };
 
   return (
