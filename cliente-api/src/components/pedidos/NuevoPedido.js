@@ -91,6 +91,15 @@ function NuevoPedido() {
     guardarProductos(todosProductos);
   };
 
+  //eliminar un producto del state
+  const eliminarProductoPedido = (id) => {
+    const todosProductos = productos.filter(
+      (producto) => producto.producto !== id
+    );
+
+    guardarProductos(todosProductos);
+  };
+
   //actualizar el total a pagar
   const actualizarTotal = () => {
     //sie le arreglo de productos es 0, el total es cero tmb
@@ -131,6 +140,7 @@ function NuevoPedido() {
             producto={producto}
             restarProductos={restarProductos}
             aumentarProductos={aumentarProductos}
+            eliminarProductoPedido={eliminarProductoPedido}
             index={index}
           />
         ))}
