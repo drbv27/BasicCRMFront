@@ -12,7 +12,7 @@ function Pedidos() {
       guardarPedidos(resultado.data);
     };
     consultarAPI();
-  }, []);
+  }, [pedidos]);
 
   return (
     <>
