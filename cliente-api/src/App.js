@@ -16,6 +16,7 @@ import NuevoProducto from "./components/productos/NuevoProducto";
 import EditarProducto from "./components/productos/EditarProducto";
 import Pedidos from "./components/pedidos/Pedidos";
 import NuevoPedido from "./components/pedidos/NuevoPedido";
+import Login from "./components/auth/Login";
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
 
               <Route path="/pedidos" element={<Pedidos />} />
               <Route path="/pedidos/nuevo/:id" element={<NuevoPedido />} />
+
+              <Route path="/iniciar-sesion" element={<Login />} />
             </Routes>
           </main>
         </div>
