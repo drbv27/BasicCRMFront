@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, useContext, Fragment } from "react";
 
 //importar cliente axios
 import clienteAxios from "../../config/axios";
@@ -7,12 +7,18 @@ import Cliente from "./Cliente";
 
 import { Link } from "react-router-dom";
 import Spinner from "../layout/Spinner";
+//importar el context
+import { CRMContext } from "../../context/CRMContext";
 
 function Clientes() {
   //Trabajar con el state
   //clientes es igual al state, guardarClientes es igual ala funcionpara guardar el state
 
   const [clientes, guardarClientes] = useState([]);
+
+  //utilizar valores del context
+  const [auth, guardarAuth] = useContext(CRMContext);
+  console.log(auth);
 
   useEffect(() => {
     //qUERIE A LA api
