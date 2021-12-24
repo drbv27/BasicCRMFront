@@ -36,12 +36,21 @@ function Login() {
       //redireccionar
       navigate("/", { replace: true });
     } catch (error) {
-      console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "Hubo un error",
-        text: error.response.data.mensaje,
-      });
+      /* console.log(error); */
+
+      if (error.response) {
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error",
+          text: error.response.data.mensaje,
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Hubo un error",
+          text: "Hubo un error",
+        });
+      }
     }
   };
 
