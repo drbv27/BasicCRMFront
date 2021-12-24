@@ -1,10 +1,14 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import clienteAxios from "../../config/axios";
+//importar el context
+import { CRMContext } from "../../context/CRMContext";
 
 function NuevoCliente() {
   let navigate = useNavigate();
+  //utilizar valores del context
+  const [auth, guardarAuth] = useContext(CRMContext);
   //cliente=state, guardarCliente= funcion para guardar el state
   const [cliente, guardarCliente] = useState({
     nombre: "",
@@ -66,6 +70,12 @@ function NuevoCliente() {
       navigate("/", { replace: true });
     });
   };
+
+  //verificar si el usuario está autenticado o no
+  if (!auth.auth && localStorage.getItem("token") === "") {
+    console.log("probando....");
+    navigate("/iniciar-sesion");
+  }
 
   return (
     <>
